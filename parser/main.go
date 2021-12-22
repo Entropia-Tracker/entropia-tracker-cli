@@ -1,10 +1,10 @@
 package parser
 
 import (
-  "github.com/Entropia-Tracker/entropia-tracker-cli/internal/misc"
-  "strings"
   "fmt"
+  "github.com/EntropiaTally/entropia-tally-cli/internal/misc"
   "strconv"
+  "strings"
 )
 
 func preprocess(event *misc.Event) {
@@ -32,7 +32,7 @@ func preprocess(event *misc.Event) {
 
 func postprocess(event *misc.Event) {
   // Calculate real shrapnel PED value
-  if (event.Event == "loot" && (*event.Values)["name"] == "Shrapnel") {
+  if event.Event == "loot" && (*event.Values)["name"] == "Shrapnel" {
     amount, err := strconv.Atoi((*event.Values)["amount"])
     if err != nil {
       return

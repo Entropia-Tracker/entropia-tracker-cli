@@ -1,7 +1,7 @@
 package parser
 
 import (
-  "github.com/Entropia-Tracker/entropia-tracker-cli/internal/misc"
+  "github.com/EntropiaTally/entropia-tally-cli/internal/misc"
   "reflect"
   "testing"
 )
