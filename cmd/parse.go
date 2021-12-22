@@ -2,9 +2,9 @@ package main
 
 import (
   "fmt"
-  "github.com/Entropia-Tracker/entropia-tracker-cli/internal/misc"
-  "github.com/Entropia-Tracker/entropia-tracker-cli/internal/watcher"
-  "github.com/Entropia-Tracker/entropia-tracker-cli/parser"
+  "github.com/EntropiaTally/entropia-tally-cli/internal/misc"
+  "github.com/EntropiaTally/entropia-tally-cli/internal/watcher"
+  "github.com/EntropiaTally/entropia-tally-cli/parser"
   "os"
 )
 

@@ -1,4 +1,4 @@
-module github.com/Entropia-Tracker/entropia-tracker-cli
+module github.com/EntropiaTally/entropia-tally-cli
 
 go 1.17
 
