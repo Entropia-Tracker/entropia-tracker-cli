@@ -32,7 +32,8 @@ func preprocess(event *misc.Event) {
 
 func postprocess(event *misc.Event) {
   // Calculate real shrapnel PED value
-  if event.Event == "loot" && (*event.Values)["name"] == "Shrapnel" {
+  name := (*event.Values)["name"]
+  if event.Event == "loot" && (name == "Shrapnel" || name == "Explosive Projectile") {
     amount, err := strconv.Atoi((*event.Values)["amount"])
     if err != nil {
       return

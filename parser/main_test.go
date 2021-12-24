@@ -42,6 +42,19 @@ func TestParseLoot(t *testing.T) {
     Date:    "2020-12-24 18:35:50",
     Channel: "system",
     Values: &map[string]string{
+      "value":  "6.2885",
+      "name":   "Explosive Projectile",
+      "amount": "62885",
+    },
+  }
+
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] You received Explosive Projectile x (62885) Value: 6.28 PED", testPlayerName)
+
+  want = &misc.Event{
+    Event:   "loot",
+    Date:    "2020-12-24 18:35:50",
+    Channel: "system",
+    Values: &map[string]string{
       "value":  "0.1877",
       "name":   "(╯°□°)╯︵ ┻━┻)",
       "amount": "1877",
