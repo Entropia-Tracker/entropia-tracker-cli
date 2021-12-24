@@ -41,6 +41,21 @@ func postprocess(event *misc.Event) {
     value := float64(amount) / 10000
     (*event.Values)["value"] = fmt.Sprintf("%.4f", value)
   }
+
+  // Handle PEC values in rare loot events
+  if event.Event == "rare_loot" {
+    if (*event.Values)["unit"] == "PEC" {
+      pecValue, err := strconv.Atoi((*event.Values)["value"])
+      if err != nil {
+        return
+      }
+
+      pedValue := float64(pecValue) / 100
+      (*event.Values)["value"] = fmt.Sprintf("%.2f", pedValue)
+    }
+
+    delete(*event.Values, "unit")
+  }
 }
 
 func validEvent(event *misc.Event, playerName string) bool {
