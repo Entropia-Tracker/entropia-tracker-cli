@@ -42,6 +42,19 @@ func TestParseLoot(t *testing.T) {
     Date:    "2020-12-24 18:35:50",
     Channel: "system",
     Values: &map[string]string{
+      "value":  "6.2885",
+      "name":   "Explosive Projectile",
+      "amount": "62885",
+    },
+  }
+
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] You received Explosive Projectile x (62885) Value: 6.28 PED", testPlayerName)
+
+  want = &misc.Event{
+    Event:   "loot",
+    Date:    "2020-12-24 18:35:50",
+    Channel: "system",
+    Values: &map[string]string{
       "value":  "0.1877",
       "name":   "(╯°□°)╯︵ ┻━┻)",
       "amount": "1877",
@@ -229,6 +242,17 @@ func TestParseEnemyDodge(t *testing.T) {
   parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] The target Dodged your attack", testPlayerName)
 }
 
+func TestParseEnemyJam(t *testing.T) {
+  want := &misc.Event{
+    Event:   "enemy_jam",
+    Date:    "2020-12-24 18:35:50",
+    Channel: "system",
+    Values:  &map[string]string{},
+  }
+
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] The target Jammed your attack", testPlayerName)
+}
+
 func TestParseEnemyEvade(t *testing.T) {
   want := &misc.Event{
     Event:   "enemy_evade",
@@ -271,6 +295,17 @@ func TestParsePlayerDeflect(t *testing.T) {
   }
 
   parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] Damage deflected!", testPlayerName)
+}
+
+func TestParsePlayerMiss(t *testing.T) {
+  want := &misc.Event{
+    Event:   "player_miss",
+    Date:    "2020-12-24 18:35:50",
+    Channel: "system",
+    Values:  &map[string]string{},
+  }
+
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] You missed", testPlayerName)
 }
 
 func TestParseGlobal(t *testing.T) {
@@ -342,6 +377,21 @@ func TestParseRareLoot(t *testing.T) {
   }
 
   parseAndCompare(t, want, "2020-12-24 18:35:50 [Globals] [] Test Player Name has found a rare item (Holy Grail) with a value of 5000 PED! A record has been added to the Hall of Fame!", testPlayerName)
+}
+
+func TestParseRareLootPEC(t *testing.T) {
+  want := &misc.Event{
+    Event:   "rare_loot",
+    Date:    "2020-12-24 18:35:50",
+    Channel: "globals",
+    Values: &map[string]string{
+      "player": "Test Player Name",
+      "item":   "Holy Grail",
+      "value":  "0.02",
+    },
+  }
+
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [Globals] [] Test Player Name has found a rare item (Holy Grail) with a value of 2 PEC! A record has been added to the Hall of Fame!", testPlayerName)
 }
 
 func TestParseRareLootWrongName(t *testing.T) {

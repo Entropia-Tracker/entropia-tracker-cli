@@ -32,7 +32,8 @@ func preprocess(event *misc.Event) {
 
 func postprocess(event *misc.Event) {
   // Calculate real shrapnel PED value
-  if event.Event == "loot" && (*event.Values)["name"] == "Shrapnel" {
+  name := (*event.Values)["name"]
+  if event.Event == "loot" && (name == "Shrapnel" || name == "Explosive Projectile") {
     amount, err := strconv.Atoi((*event.Values)["amount"])
     if err != nil {
       return
@@ -40,6 +41,21 @@ func postprocess(event *misc.Event) {
 
     value := float64(amount) / 10000
     (*event.Values)["value"] = fmt.Sprintf("%.4f", value)
+  }
+
+  // Handle PEC values in rare loot events
+  if event.Event == "rare_loot" {
+    if (*event.Values)["unit"] == "PEC" {
+      pecValue, err := strconv.Atoi((*event.Values)["value"])
+      if err != nil {
+        return
+      }
+
+      pedValue := float64(pecValue) / 100
+      (*event.Values)["value"] = fmt.Sprintf("%.2f", pedValue)
+    }
+
+    delete(*event.Values, "unit")
   }
 }
 
