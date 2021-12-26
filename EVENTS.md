@@ -30,6 +30,7 @@ key.
 |                  | critical | `0`                | Critical hit, available values: `1` or `0` |
 | enemy_dodge      | `-`      | `-`                | Enemy dodged player attack                 |
 | enemy_evade      | `-`      | `-`                | Enemy evaded player attack                 |
+| enemy_jam        | `-`      | `-`                | Enemy jammed player attack                 |
 | enemy_miss       | `-`      | `-`                | Enemy missed an attack                     |
 | global           | `-`      | `-`                | Player got a global**                      |
 |                  | player   | `Some Player Name` | Name of the player                         |
@@ -49,6 +50,7 @@ key.
 | player_deflect   | `-`      | `-`                | Player deflected damage                    |
 | player_dodge     | `-`      | `-`                | Player dodged an attack                    |
 | player_evade     | `-`      | `-`                | Player evaded an attack                    |
+| player_miss      | `-`      | `-`                | Player missed an attack                    |
 | position         | `-`      | `-`                | Player position                            |
 |                  | lat      | `12345`            | Latitude                                   |
 |                  | lon      | `6789`             | Longitude                                  |
