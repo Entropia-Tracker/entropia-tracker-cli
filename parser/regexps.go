@@ -89,6 +89,14 @@ var rareLootRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2
 // date, channel, target, amount
 var healRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\sYou\shealed\s(?P<target>.*?)\s(with\s)?(?P<amount>[\d.]+)\spoints$`)
 
+// 0000-00-00 00:00:00 [System] [] Your enhancer Weapon Damage Enhancer 1 on your Omegaton M83 Predator broke. You have 246 enhancers remaining on the item. You received 0.8000 PED Shrapnel.
+// date, channel, name, item, remaining, value
+var enhancerBreakRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\] Your\senhancer\s(?P<name>.*)\son\syour\s(?P<item>.*)\sbroke\.\sYou\shave\s(?P<remaining>\d+)\senhancers\sremaining\son\sthe\sitem\.\sYou\sreceived\s(?P<value>.*)\sPED\sShrapnel\.$`)
+
+// 0000-00-00 00:00:00 [System] [] Your Arsonistic Chip 2 (L) has reached tier 1.12
+// date, channel, item, tier
+var tierUpRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\sYour\s(?P<item>.*)\shas\sreached\stier\s(?P<tier>.*)$`)
+
 var regexps = map[string]*regexp.Regexp{
   "attribute":                 attributeRegexp,
   "critical_damage_inflicted": criticalDamageInflictedRegexp,
@@ -99,6 +107,7 @@ var regexps = map[string]*regexp.Regexp{
   "enemy_evade":               enemyEvadeRegexp,
   "enemy_jam":                 enemyJamRegexp,
   "enemy_miss":                enemyMissRegexp,
+  "enhancer_break":            enhancerBreakRegexp,
   "global":                    globalRegexp,
   "hall_of_fame":              hallOfFameRegexp,
   "heal":                      healRegexp,
@@ -111,4 +120,5 @@ var regexps = map[string]*regexp.Regexp{
   "rare_loot":                 rareLootRegexp,
   "skill":                     skillRegexp,
   "skill_alt":                 skillAltRegexp,
+  "tier_up":                   tierUpRegexp,
 }

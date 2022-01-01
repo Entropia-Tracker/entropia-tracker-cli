@@ -406,3 +406,33 @@ func TestParseRareLootWrongName(t *testing.T) {
     t.Errorf("got %s; want nil", wantStr)
   }
 }
+
+func TestEnhancerBreak(t *testing.T) {
+  want := &misc.Event{
+    Event:   "enhancer_break",
+    Date:    "2020-12-24 18:35:50",
+    Channel: "system",
+    Values: &map[string]string{
+      "name":      "Weapon Damage Enhancer 1",
+      "item":      "Omegaton M83 Predator",
+      "remaining": "246",
+      "value":     "0.8000",
+    },
+  }
+
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] Your enhancer Weapon Damage Enhancer 1 on your Omegaton M83 Predator broke. You have 246 enhancers remaining on the item. You received 0.8000 PED Shrapnel.", testPlayerName)
+}
+
+func TestTierUp(t *testing.T) {
+  want := &misc.Event{
+    Event:   "tier_up",
+    Date:    "2020-12-24 18:35:50",
+    Channel: "system",
+    Values: &map[string]string{
+      "item": "Arsonistic Chip 2 (L)",
+      "tier": "1.12",
+    },
+  }
+
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] Your Arsonistic Chip 2 (L) has reached tier 1.12", testPlayerName)
+}
