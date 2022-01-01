@@ -422,3 +422,17 @@ func TestEnhancerBreak(t *testing.T) {
 
   parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] Your enhancer Weapon Damage Enhancer 1 on your Omegaton M83 Predator broke. You have 246 enhancers remaining on the item. You received 0.8000 PED Shrapnel.", testPlayerName)
 }
+
+func TestTierUp(t *testing.T) {
+  want := &misc.Event{
+    Event:   "tier_up",
+    Date:    "2020-12-24 18:35:50",
+    Channel: "system",
+    Values: &map[string]string{
+      "item": "Arsonistic Chip 2 (L)",
+      "tier": "1.12",
+    },
+  }
+
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] Your Arsonistic Chip 2 (L) has reached tier 1.12", testPlayerName)
+}

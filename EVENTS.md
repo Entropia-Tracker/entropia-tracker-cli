@@ -67,7 +67,9 @@ key.
 | skill            | `-`       | `-`                        | Player gained skill points                 |
 |                  | name      | `Wounding`                 | Skill name                                 |
 |                  | value     | `6.5432`                   | Points value                               |
-
+| tier_up          | `-`       | `-`                        | Item gained a tier                         |
+|                  | item      | `Arsonistic Chip 2 (L)`    | Item name                                  |
+|                  | tier      | `1.12`                     | New tier                                   |
 
 *\* Note: Player name must be supplied or heals on yourself will return `yourself` instead of your name.*
 
