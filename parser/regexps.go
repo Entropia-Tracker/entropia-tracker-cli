@@ -74,16 +74,19 @@ var playerDeflectRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}
 var playerMissRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\sYou\smissed$`)
 
 // 0000-00-00 00:00:00 [Globals] [] Example Player Name killed a creature (Kerberos Young) with a value of 15 PED!
+// 0000-00-00 00:00:00 [Globals] [] Example Player Name killed a creature (Kerberos Young) with a value of 15 PED at DSEC-9!
 // date, channel, player, enemy, value
-var globalRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\skilled\sa\screature\s\((?P<enemy>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\sPED!$`)
+var globalRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\skilled\sa\screature\s\((?P<enemy>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\sPED(\sat\s.*[^Hall\sof\sfame])?!$`)
 
 // 0000-00-00 00:00:00 [Globals] [] Example Player Name killed a creature (Kerberos Young) with a value of 15 PED! A record has been added to the Hall of Fame!
+// 0000-00-00 00:00:00 [Globals] [] Example Player Name killed a creature (Kerberos Young) with a value of 15 PED at DSEC-9! A record has been added to the Hall of Fame!
 // date, channel, player, enemy, value
-var hallOfFameRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\skilled\sa\screature\s\((?P<enemy>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\sPED!\sA\srecord\shas\sbeen\sadded\sto\sthe\sHall\sof\sFame!$`)
+var hallOfFameRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\skilled\sa\screature\s\((?P<enemy>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\sPED(\sat\s.*)?!\sA\srecord\shas\sbeen\sadded\sto\sthe\sHall\sof\sFame!$`)
 
 // 0000-00-00 00:00:00 [Globals] [] Example Player Name has found a rare item (Holy Grail) with a value of 5000 PED! A record has been added to the Hall of Fame!
+// 0000-00-00 00:00:00 [Globals] [] Example Player Name has found a rare item (Holy Grail) with a value of 5000 PED at DSEC-9! A record has been added to the Hall of Fame!
 // date, channel, player, item, value
-var rareLootRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\shas\sfound\sa\srare\sitem\s\((?P<item>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\s(?P<unit>PE(D|C))!\sA\srecord\shas\sbeen\sadded\sto\sthe\sHall\sof\sFame!$`)
+var rareLootRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\shas\sfound\sa\srare\sitem\s\((?P<item>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\s(?P<unit>PE(D|C))(\sat\s.*)?!\sA\srecord\shas\sbeen\sadded\sto\sthe\sHall\sof\sFame!$`)
 
 // 0000-00-00 00:00:00 [System] [] You healed yourself 38.2 points
 // date, channel, target, amount
