@@ -321,6 +321,7 @@ func TestParseGlobal(t *testing.T) {
   }
 
   parseAndCompare(t, want, "2020-12-24 18:35:50 [Globals] [] Test Player Name killed a creature (Kerberos Young) with a value of 15 PED!", testPlayerName)
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [Globals] [] Test Player Name killed a creature (Kerberos Young) with a value of 15 PED at DSEC-9!", testPlayerName)
 }
 
 func TestParseGlobalWrongName(t *testing.T) {
@@ -349,6 +350,7 @@ func TestParseHallOfFame(t *testing.T) {
   }
 
   parseAndCompare(t, want, "2020-12-24 18:35:50 [Globals] [] Test Player Name killed a creature (Kerberos Young) with a value of 1500 PED! A record has been added to the Hall of Fame!", testPlayerName)
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [Globals] [] Test Player Name killed a creature (Kerberos Young) with a value of 1500 PED at DSEC-9! A record has been added to the Hall of Fame!", testPlayerName)
 }
 
 func TestParseHallOfFameWrongName(t *testing.T) {
@@ -377,6 +379,7 @@ func TestParseRareLoot(t *testing.T) {
   }
 
   parseAndCompare(t, want, "2020-12-24 18:35:50 [Globals] [] Test Player Name has found a rare item (Holy Grail) with a value of 5000 PED! A record has been added to the Hall of Fame!", testPlayerName)
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [Globals] [] Test Player Name has found a rare item (Holy Grail) with a value of 5000 PED at DSEC-9! A record has been added to the Hall of Fame!", testPlayerName)
 }
 
 func TestParseRareLootPEC(t *testing.T) {
