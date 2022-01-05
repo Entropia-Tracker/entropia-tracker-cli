@@ -93,8 +93,9 @@ var rareLootRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2
 var healRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\sYou\shealed\s(?P<target>.*?)\s(with\s)?(?P<amount>[\d.]+)\spoints$`)
 
 // 0000-00-00 00:00:00 [System] [] Your enhancer Weapon Damage Enhancer 1 on your Omegaton M83 Predator broke. You have 246 enhancers remaining on the item. You received 0.8000 PED Shrapnel.
+// 0000-00-00 00:00:00 [System] [] Your enhancer Weapon Damage Enhancer 1 on your Omegaton M83 Predator broke. You have 246 enhancers remaining on the item. You received 0.8000 PED Shrapnel.
 // date, channel, name, item, remaining, value
-var enhancerBreakRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\] Your\senhancer\s(?P<name>.*)\son\syour\s(?P<item>.*)\sbroke\.\sYou\shave\s(?P<remaining>\d+)\senhancers\sremaining\son\sthe\sitem\.\sYou\sreceived\s(?P<value>.*)\sPED\sShrapnel\.$`)
+var enhancerBreakRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\] Your\senhancer\s(?P<name>.*)\son\syour\s(?P<item>.*)\sbroke\.\sYou\shave\s(?P<remaining>\d+)\senhancers\sremaining\son\sthe\sitem\.\sYou\sreceived\s(?P<value>.*)\sPED\sShrapnel\.\s?$`)
 
 // 0000-00-00 00:00:00 [System] [] Your Arsonistic Chip 2 (L) has reached tier 1.12
 // date, channel, item, tier

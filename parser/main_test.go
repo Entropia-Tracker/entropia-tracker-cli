@@ -424,6 +424,7 @@ func TestEnhancerBreak(t *testing.T) {
   }
 
   parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] Your enhancer Weapon Damage Enhancer 1 on your Omegaton M83 Predator broke. You have 246 enhancers remaining on the item. You received 0.8000 PED Shrapnel.", testPlayerName)
+  parseAndCompare(t, want, "2020-12-24 18:35:50 [System] [] Your enhancer Weapon Damage Enhancer 1 on your Omegaton M83 Predator broke. You have 246 enhancers remaining on the item. You received 0.8000 PED Shrapnel. ", testPlayerName)
 }
 
 func TestTierUp(t *testing.T) {
