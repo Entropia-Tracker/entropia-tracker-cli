@@ -41,6 +41,7 @@ key.
 |                      | player    | string   | `Some Player Name`         | Name of the player                                     |
 |                      | enemy     | string?  | `Kerberos Young`           | Enemy name                                             |
 |                      | item      | string?  | `Holy Grail`               | Only available on `rare` loots                         |
+|                      | location  | string?  | `Some cave`                | Location
 |                      | type      | string   | `global`                   | Possible values: `global`, `hall_of_fame` or `rare`    |
 | **heal**             |           |          |                            | Player healed someone                                  |
 |                      | target    | string   | `Some Player Name`         | Name of the player healed*                             |
