@@ -18,49 +18,45 @@ type ParseCmd struct {
 
 func (p *ParseCmd) Run(ctx *Context) error {
   events := make(chan *misc.Event)
+  defer close(events)
 
-  go p.watchChatlog(events)
+  go func() {
+    for {
+      event := <-events
 
-  for {
-    event := <-events
+      // JSON serialize parsed result
+      serialized, err := event.JSON()
+      if err != nil {
+        continue
+      }
 
-    if event.Event == "EOF" {
-      break
+      // Output to Stdout
+      fmt.Fprintln(os.Stdout, serialized)
     }
+  }()
 
-    // JSON serialize parsed result
-    serialized, err := event.JSON()
-    if err != nil {
-      continue
-    }
-
-    // Output to Stdout
-    fmt.Fprintln(os.Stdout, serialized)
-  }
-
-  return nil
+  err := p.watchChatlog(events)
+  return err
 }
 
 // watchChatlog for new entries
-func (p *ParseCmd) watchChatlog(events chan *misc.Event) {
+func (p *ParseCmd) watchChatlog(events chan *misc.Event) error {
   msg := make(chan string)
   defer close(msg)
 
-  go watcher.Parse(p.File, msg, p.All, p.Watch)
+  go func() {
+    for {
+      row := <-msg
 
-  for {
-    row := <-msg
+      result, ok := parser.Parse(row, p.Name)
+      if !ok {
+        continue
+      }
 
-    if row == "EOF" {
-      events <- &misc.Event{Event: "EOF"}
-      break
+      events <- result
     }
+  }()
 
-    result, ok := parser.Parse(row, p.Name)
-    if !ok {
-      continue
-    }
-
-    events <- result
-  }
+  err := watcher.Parse(p.File, msg, p.All, p.Watch)
+  return err
 }
