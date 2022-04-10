@@ -29,7 +29,8 @@ key.
 |                      | amount    | float    | `50.0`                     | Amount of damage taken                                 |
 |                      | critical  | bool     | `false`                    | Critical hit                                           |
 | **enemy_evade**      |           |          |                            | Enemy evaded damage                                    |
-|                      | reason    | string   | `dodge`                    | Possible values: `dodge`, `evade`, `jam` or `miss`     |
+|                      | reason    | string   | `dodge`                    | Possible values: `dodge`, `evade` or `jam`             |
+| **enemy_miss**       |           |          |                            | Enemy missed an attack                                 |
 | **enhancer_break**   |           |          |                            | Enhancer broke                                         |
 |                      | name      | string   | `Weapon Damage Enhancer 1` | Name of the enhancer                                   |
 |                      | item      | string   | `Omegaton M83 Predator`    | Item it was attached to                                |
@@ -49,7 +50,8 @@ key.
 |                      | amount    | int      | `50`                       | Item amount                                            |
 |                      | value     | float    | `5.50`                     | PED value                                              |
 | **player_evade**     |           |          |                            | Player evaded damage                                   |
-|                      | reason    | string   | `dodge`                    | Possible values: `dodge`, `evade`, `deflect` or `miss` |
+|                      | reason    | string   | `dodge`                    | Possible values: `dodge`, `evade` or `deflect`         |
+| **player_miss**      |           |          |                            | Player missed an attack                                |
 | **position**         |           |          |                            | Player position                                        |
 |                      | lat       | int      | `12345`                    | Latitude                                               |
 |                      | lon       | int      | `6789`                     | Longitude                                              |
