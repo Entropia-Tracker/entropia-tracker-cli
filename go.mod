@@ -1,6 +1,6 @@
 module github.com/EntropiaTally/entropia-tally-cli
 
-go 1.17
+go 1.18
 
 require (
 	github.com/alecthomas/kong v0.5.0

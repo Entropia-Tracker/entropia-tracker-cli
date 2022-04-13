@@ -2,9 +2,8 @@ package main
 
 import (
   "fmt"
-  "github.com/EntropiaTally/entropia-tally-cli/internal/misc"
-  "github.com/EntropiaTally/entropia-tally-cli/internal/watcher"
-  "github.com/EntropiaTally/entropia-tally-cli/parser"
+  "github.com/EntropiaTally/entropia-tally-cli/pkg/events"
+  "github.com/EntropiaTally/entropia-tally-cli/pkg/util"
   "os"
 )
 
@@ -17,46 +16,21 @@ type ParseCmd struct {
 }
 
 func (p *ParseCmd) Run(ctx *Context) error {
-  events := make(chan *misc.Event)
-  defer close(events)
+  return util.ReadFile(p.File, p.All, p.Watch, func(row string) {
 
-  go func() {
-    for {
-      event := <-events
-
-      // JSON serialize parsed result
-      serialized, err := event.JSON()
-      if err != nil {
-        continue
-      }
-
-      // Output to Stdout
-      fmt.Fprintln(os.Stdout, serialized)
+    // Parse row into *Event
+    event, ok := events.Parse(row, p.Name)
+    if !ok {
+      return
     }
-  }()
 
-  err := p.watchChatlog(events)
-  return err
-}
-
-// watchChatlog for new entries
-func (p *ParseCmd) watchChatlog(events chan *misc.Event) error {
-  msg := make(chan string)
-  defer close(msg)
-
-  go func() {
-    for {
-      row := <-msg
-
-      result, ok := parser.Parse(row, p.Name)
-      if !ok {
-        continue
-      }
-
-      events <- result
+    // Serialize to JSON string
+    serialized, ok := event.JSON()
+    if !ok {
+      return
     }
-  }()
 
-  err := watcher.Parse(p.File, msg, p.All, p.Watch)
-  return err
+    // Print to Stdout
+    fmt.Fprintln(os.Stdout, serialized)
+  })
 }

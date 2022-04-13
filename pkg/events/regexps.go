@@ -1,4 +1,4 @@
-package parser
+package events
 
 import (
   "regexp"
@@ -75,24 +75,23 @@ var playerMissRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d
 
 // 0000-00-00 00:00:00 [Globals] [] Example Player Name killed a creature (Kerberos Young) with a value of 15 PED!
 // 0000-00-00 00:00:00 [Globals] [] Example Player Name killed a creature (Kerberos Young) with a value of 15 PED at DSEC-9!
-// date, channel, player, enemy, value
-var globalRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\skilled\sa\screature\s\((?P<enemy>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\sPED(\sat\s.*[^Hall\sof\sfame])?!$`)
+// date, channel, player, enemy, value, location
+var globalRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\skilled\sa\screature\s\((?P<enemy>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\sPED(\sat\s(?P<location>.*[^Hall\sof\sfame]))?!$`)
 
 // 0000-00-00 00:00:00 [Globals] [] Example Player Name killed a creature (Kerberos Young) with a value of 15 PED! A record has been added to the Hall of Fame!
 // 0000-00-00 00:00:00 [Globals] [] Example Player Name killed a creature (Kerberos Young) with a value of 15 PED at DSEC-9! A record has been added to the Hall of Fame!
-// date, channel, player, enemy, value
-var hallOfFameRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\skilled\sa\screature\s\((?P<enemy>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\sPED(\sat\s.*)?!\sA\srecord\shas\sbeen\sadded\sto\sthe\sHall\sof\sFame!$`)
+// date, channel, player, enemy, value, location
+var hallOfFameRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\skilled\sa\screature\s\((?P<enemy>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\sPED(\sat\s(?P<location>.*))?!\sA\srecord\shas\sbeen\sadded\sto\sthe\sHall\sof\sFame!$`)
 
 // 0000-00-00 00:00:00 [Globals] [] Example Player Name has found a rare item (Holy Grail) with a value of 5000 PED! A record has been added to the Hall of Fame!
 // 0000-00-00 00:00:00 [Globals] [] Example Player Name has found a rare item (Holy Grail) with a value of 5000 PED at DSEC-9! A record has been added to the Hall of Fame!
-// date, channel, player, item, value
-var rareLootRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\shas\sfound\sa\srare\sitem\s\((?P<item>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\s(?P<unit>PE(D|C))(\sat\s.*)?!\sA\srecord\shas\sbeen\sadded\sto\sthe\sHall\sof\sFame!$`)
+// date, channel, player, item, value, location
+var rareLootRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\s(?P<player>.*)\shas\sfound\sa\srare\sitem\s\((?P<item>.*?)\)\swith\sa\svalue\sof\s(?P<value>\d+)\s(?P<unit>PE(D|C))(\sat\s(?P<location>.*))?!\sA\srecord\shas\sbeen\sadded\sto\sthe\sHall\sof\sFame!$`)
 
 // 0000-00-00 00:00:00 [System] [] You healed yourself 38.2 points
 // date, channel, target, amount
 var healRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\]\sYou\shealed\s(?P<target>.*?)\s(with\s)?(?P<amount>[\d.]+)\spoints$`)
 
-// 0000-00-00 00:00:00 [System] [] Your enhancer Weapon Damage Enhancer 1 on your Omegaton M83 Predator broke. You have 246 enhancers remaining on the item. You received 0.8000 PED Shrapnel.
 // 0000-00-00 00:00:00 [System] [] Your enhancer Weapon Damage Enhancer 1 on your Omegaton M83 Predator broke. You have 246 enhancers remaining on the item. You received 0.8000 PED Shrapnel.
 // date, channel, name, item, remaining, value
 var enhancerBreakRegexp = regexp.MustCompile(`^(?P<date>\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})\s\[(?P<channel>\S+)\]\s\[\] Your\senhancer\s(?P<name>.*)\son\syour\s(?P<item>.*)\sbroke\.\sYou\shave\s(?P<remaining>\d+)\senhancers\sremaining\son\sthe\sitem\.\sYou\sreceived\s(?P<value>.*)\sPED\sShrapnel\.\s?$`)
@@ -125,4 +124,31 @@ var regexps = map[string]*regexp.Regexp{
   "skill":                     skillRegexp,
   "skill_alt":                 skillAltRegexp,
   "tier_up":                   tierUpRegexp,
+}
+
+var eventKeyMappings = map[string]string{
+  "attribute":                 "points_gained",
+  "critical_damage_inflicted": "damage_inflicted",
+  "critical_damage_taken":     "damage_taken",
+  "damage_inflicted":          "damage_inflicted",
+  "damage_taken":              "damage_taken",
+  "enemy_dodge":               "enemy_evade",
+  "enemy_evade":               "enemy_evade",
+  "enemy_jam":                 "enemy_evade",
+  "global":                    "special_loot",
+  "hall_of_fame":              "special_loot",
+  "player_deflect":            "player_evade",
+  "player_dodge":              "player_evade",
+  "player_evade":              "player_evade",
+  "rare_loot":                 "special_loot",
+  "skill":                     "points_gained",
+  "skill_alt":                 "points_gained",
+}
+
+func getEventKey(key string) string {
+  if val, ok := eventKeyMappings[key]; ok {
+    return val
+  }
+
+  return key
 }

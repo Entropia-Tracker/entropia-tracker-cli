@@ -1,4 +1,4 @@
-package watcher
+package util
 
 import (
   "bufio"
@@ -9,8 +9,9 @@ import (
   "time"
 )
 
-// Parse a file and return lines through the channel
-func Parse(path string, msg chan<- string, fromStart, watchFile bool) error {
+// ReadFile reads/watches a file and calls the callback function for each row.
+func ReadFile(path string, fromStart, watchFile bool, callback func(string)) error {
+
   // Open file handle for reading
   handle, err := os.Open(path)
   if err != nil {
@@ -34,11 +35,16 @@ func Parse(path string, msg chan<- string, fromStart, watchFile bool) error {
     for {
       line, _, err := reader.ReadLine()
 
-      if err == io.EOF {
+      if err == io.EOF { // Reached end of logfile.
         break
-      } else if len(line) != 0 {
-        msg <- string(line)
+      } else if err != nil { // Something bad happened
+        return err
+      } else if len(line) == 0 { // Empty line, ignore
+        continue
       }
+
+      // Send line to callback
+      callback(string(line))
     }
   }
 
@@ -130,8 +136,8 @@ func Parse(path string, msg chan<- string, fromStart, watchFile bool) error {
             continue
           }
 
-          // Send line to channel
-          msg <- string(line)
+          // Send line to callback
+          callback(string(line))
         }
       }
     }
@@ -140,7 +146,7 @@ func Parse(path string, msg chan<- string, fromStart, watchFile bool) error {
   return nil
 }
 
-// getFileSize
+// getFileSize helper
 func getFileSize(path string) (int64, error) {
   stat, err := os.Stat(path)
   if err != nil {
