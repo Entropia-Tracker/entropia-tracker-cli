@@ -9,67 +9,61 @@ key.
     "date": "YYYY-MM-DD HH:mm:ss",
     "channel": "system",
     "values": {
-      "key": "value"
+      "key": <value>
     }
 }
 ```
 
 ## Values
 
+| Event                | Key       | Type     | Example value              | Description                                              |
+|----------------------|-----------|----------|----------------------------|----------------------------------------------------------|
+| **points_gained**    |           |          |                            | Attribute or skill points gained                         |
+|                      | name      | string   | `Agility`                  | Name                                                     |
+|                      | value     | float    | `50.8`                     | Points value                                             |
+|                      | type      | string   | `skill`                    | Type of point `skill` or `attribute`                     |
+| **damage_inflicted** |           |          |                            | Player inflicted damage                                  |
+|                      | amount    | float    | `50.0`                     | Amount of damage inflicted                               |
+|                      | critical  | bool     | `true`                     | Critical hit                                             |
+| **damage_taken**     |           |          |                            | Player took damage                                       |
+|                      | amount    | float    | `50.0`                     | Amount of damage taken                                   |
+|                      | critical  | bool     | `false`                    | Critical hit                                             |
+| **enemy_evade**      |           |          |                            | Enemy evaded damage                                      |
+|                      | reason    | string   | `dodge`                    | Possible values: `dodge`, `evade` or `jam`               |
+| **enemy_miss**       |           |          |                            | Enemy missed an attack                                   |
+| **enhancer_break**   |           |          |                            | Enhancer broke                                           |
+|                      | name      | string   | `Weapon Damage Enhancer 1` | Name of the enhancer                                     |
+|                      | item      | string   | `Omegaton M83 Predator`    | Item it was attached to                                  |
+|                      | remaining | int      | `200`                      | Currently remaining on item                              |
+|                      | value     | float    | `0.8000`                   | PED value                                                |
+| **special_loot**     |           |          |                            | Player got a special loot**                              |
+|                      | value     | float    | `15.0`                     | PED value                                                |
+|                      | player    | string   | `Some Player Name`         | Name of the player                                       |
+|                      | enemy     | string?  | `Kerberos Young`           | Enemy name                                               |
+|                      | item      | string?  | `Holy Grail`               | Only available on `rare` loots                           |
+|                      | location  | string?  | `Some cave`                | Location                                                 |
+|                      | type      | string   | `global`                   | Possible values: `global`, `hall_of_fame` or `rare_loot` |
+| **heal**             |           |          |                            | Player healed someone                                    |
+|                      | target    | string   | `Some Player Name`         | Name of the player healed*                               |
+|                      | amount    | float    | `50.0`                     | Amount healed                                            |
+| **loot**             |           |          |                            | Player received loot                                     |
+|                      | name      | string   | `Shrapnel`                 | Looted item                                              |
+|                      | amount    | int      | `50`                       | Item amount                                              |
+|                      | value     | float    | `5.50`                     | PED value                                                |
+| **player_evade**     |           |          |                            | Player evaded damage                                     |
+|                      | reason    | string   | `dodge`                    | Possible values: `dodge`, `evade` or `deflect`           |
+| **player_miss**      |           |          |                            | Player missed an attack                                  |
+| **position**         |           |          |                            | Player position                                          |
+|                      | lat       | int      | `12345`                    | Latitude                                                 |
+|                      | lon       | int      | `6789`                     | Longitude                                                |
+|                      | alt       | int?     | `50`                       | Altitude                                                 |
+|                      | name      | string?  | `Calypso`                  | Name                                                     |
+| **tier_up**          |           |          |                            | Item gained a tier                                       |
+|                      | item      | string   | `Arsonistic Chip 2 (L)`    | Item name                                                |
+|                      | tier      | float    | `1.12`                     | New tier                                                 |
 
-| Event            | Key       | Example value              | Description                                |
-|------------------|-----------|----------------------------|--------------------------------------------|
-| attribute        | `-`       | `-`                        | Attribute points gained                    |
-|                  | name      | `Agility`                  | Attribute name                             |
-|                  | value     | `10.0`                     | Number of points gained                    |
-| damage_inflicted | `-`       | `-`                        | Player inflicted damage                    |
-|                  | amount    | `50.0`                     | Amount of damage inflicted                 |
-|                  | critical  | `0`                        | Critical hit, available values: `1` or `0` |
-| damage_taken     | `-`       | `-`                        | Player took damage                         |
-|                  | amount    | `50.0`                     | Amount of damage taken                     |
-|                  | critical  | `0`                        | Critical hit, available values: `1` or `0` |
-| enemy_dodge      | `-`       | `-`                        | Enemy dodged player attack                 |
-| enemy_evade      | `-`       | `-`                        | Enemy evaded player attack                 |
-| enemy_jam        | `-`       | `-`                        | Enemy jammed player attack                 |
-| enemy_miss       | `-`       | `-`                        | Enemy missed an attack                     |
-| enhancer_break   | `-`       | `-`                        | Enhancer broke                             |
-|                  | name      | `Weapon Damage Enhancer 1` | Name of the enhancer                       |
-|                  | item      | `Omegaton M83 Predator`    | Item it was attached to                    |
-|                  | remaining | `200`                      | Number of remaining on item                |
-|                  | value     | `0.8000`                   | PED value                                  |
-| global           | `-`       | `-`                        | Player got a global**                      |
-|                  | player    | `Some Player Name`         | Name of the player                         |
-|                  | enemy     | `Kerberos Young`           | Mob that dropped it                        |
-|                  | value     | `15`                       | PED value of the global                    |
-| hall_of_fame     | `-`       | `-`                        | Player got a Hall of Fame entry**          |
-|                  | player    | `Some Player Name`         | Name of the player                         |
-|                  | enemy     | `Kerberos Mature`          | Mob that dropped it                        |
-|                  | value     | `1500`                     | PED value                                  |
-| heal             | `-`       | `-`                        | Player healed someone                      |
-|                  | target    | `Some Player Name`         | Name of the player healed*                 |
-|                  | amount    | `50.0`                     | Amount healed                              |
-| loot             | `-`       | `-`                        | Player received loot                       |
-|                  | name      | `Shrapnel`                 | Item name                                  |
-|                  | amount    | `50`                       | Item amount                                |
-|                  | value     | `5.50`                     | PED value                                  |
-| player_deflect   | `-`       | `-`                        | Player deflected damage                    |
-| player_dodge     | `-`       | `-`                        | Player dodged an attack                    |
-| player_evade     | `-`       | `-`                        | Player evaded an attack                    |
-| player_miss      | `-`       | `-`                        | Player missed an attack                    |
-| position         | `-`       | `-`                        | Player position                            |
-|                  | lat       | `12345`                    | Latitude                                   |
-|                  | lon       | `6789`                     | Longitude                                  |
-|                  | alt       | `50`                       | Altitude                                   |
-| rare_loot        | `-`       | `-`                        | Player received rare loot**                |
-|                  | player    | `Some Player Name`         | Player name                                |
-|                  | item      | `Holy Grail`               | Item name                                  |
-|                  | value     | `5000`                     | PED value                                  |
-| skill            | `-`       | `-`                        | Player gained skill points                 |
-|                  | name      | `Wounding`                 | Skill name                                 |
-|                  | value     | `6.5432`                   | Points value                               |
-| tier_up          | `-`       | `-`                        | Item gained a tier                         |
-|                  | item      | `Arsonistic Chip 2 (L)`    | Item name                                  |
-|                  | tier      | `1.12`                     | New tier                                   |
+
+*Note: Types marked with `?` are optional and can be `null`, for example `string?`.*
 
 *\* Note: Player name must be supplied or heals on yourself will return `yourself` instead of your name.*
 

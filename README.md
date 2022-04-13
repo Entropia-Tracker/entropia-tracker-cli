@@ -9,8 +9,6 @@ the [Entropia Tally](https://github.com/EntropiaTally/entropia-tally-app) client
 Visit the [releases](https://github.com/EntropiaTally/entropia-tally-cli/releases) section for pre-built
 binaries, or you can build your own, see the [Developing](#developing) section.
 
-bump
-
 ## Usage
 
 ```
@@ -31,7 +29,7 @@ they can contain.
     "date": "YYYY-MM-DD HH:mm:ss",
     "channel": "system",
     "values": {
-      "key": "value"
+      "key": <value>
     }
 }
 ```
